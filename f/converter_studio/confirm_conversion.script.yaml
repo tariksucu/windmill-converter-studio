@@ -1,0 +1,43 @@
+summary: Confirm a quoted Converter Studio conversion
+description: Goes ahead with a Converter Studio (https://converter.studio)
+  conversion that costs more than its max_credits and waits for a go-ahead
+  (status "quoted"), then waits until it is done and returns it with its
+  download link. Nothing is charged until it is confirmed.
+lock: ''
+kind: script
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  order:
+    - converter_studio
+    - id
+    - wait
+  properties:
+    id:
+      type: string
+      description: The id of the conversion that waits for a go-ahead.
+      default: null
+      originalType: string
+    converter_studio:
+      type: object
+      description: Your Converter Studio API key
+        (https://converter.studio/account#api-keys).
+      default: null
+      format: resource-converter_studio
+      properties:
+        apiKey:
+          type: string
+          description: ''
+          originalType: string
+        baseUrl:
+          type: string
+          description: ''
+          originalType: string
+    wait:
+      type: boolean
+      description: Wait until the conversion is done (off returns as soon as it has
+        started).
+      default: true
+  required:
+    - converter_studio
+    - id

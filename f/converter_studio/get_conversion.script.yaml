@@ -1,0 +1,43 @@
+summary: Get a Converter Studio conversion
+description: 'Looks up a Converter Studio (https://converter.studio) conversion
+  by its id: its status, price in credits, file names and, once it is done, a
+  download link valid for 6 hours. wait_seconds (up to 60) first waits for the
+  conversion to be done, fail or ask for a go-ahead.'
+lock: ''
+kind: script
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  order:
+    - converter_studio
+    - id
+    - wait_seconds
+  properties:
+    id:
+      type: string
+      description: The conversion's id.
+      default: null
+      originalType: string
+    converter_studio:
+      type: object
+      description: Your Converter Studio API key
+        (https://converter.studio/account#api-keys).
+      default: null
+      format: resource-converter_studio
+      properties:
+        apiKey:
+          type: string
+          description: ''
+          originalType: string
+        baseUrl:
+          type: string
+          description: ''
+          originalType: string
+    wait_seconds:
+      type: number
+      description: Wait up to this many seconds (1 to 60) for the conversion to
+        settle; 0 answers at once.
+      default: 0
+  required:
+    - converter_studio
+    - id

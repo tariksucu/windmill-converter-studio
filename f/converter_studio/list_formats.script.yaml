@@ -1,0 +1,34 @@
+summary: List the formats Converter Studio converts
+description: 'Lists the file formats Converter Studio (https://converter.studio)
+  reads and what each converts to, as a table: photos, camera RAW, video, audio,
+  documents, spreadsheets, presentations, e-books, subtitles, fonts and more.
+  from shows a single format. No API key needed.'
+lock: ''
+kind: script
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  order:
+    - converter_studio
+    - from
+  properties:
+    converter_studio:
+      type: object
+      description: Optional; listing the formats needs no API key.
+      default: null
+      format: resource-converter_studio
+      properties:
+        apiKey:
+          type: string
+          description: ''
+          originalType: string
+        baseUrl:
+          type: string
+          description: ''
+          originalType: string
+    from:
+      type: string
+      description: Only this format (heic, pdf, mov...).
+      default: null
+      originalType: string
+  required: []

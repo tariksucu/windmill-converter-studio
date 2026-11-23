@@ -1,0 +1,29 @@
+summary: Get Converter Studio account credits
+description: "Shows the Converter Studio (https://converter.studio) account of
+  the resource's API key: plan, credits left, monthly allowance and file limits.
+  Plans and credits: https://converter.studio/pricing"
+lock: ''
+kind: script
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  order:
+    - converter_studio
+  properties:
+    converter_studio:
+      type: object
+      description: Your Converter Studio API key
+        (https://converter.studio/account#api-keys).
+      default: null
+      format: resource-converter_studio
+      properties:
+        apiKey:
+          type: string
+          description: ''
+          originalType: string
+        baseUrl:
+          type: string
+          description: ''
+          originalType: string
+  required:
+    - converter_studio

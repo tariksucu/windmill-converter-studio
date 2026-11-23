@@ -1,0 +1,101 @@
+summary: Convert a file to another format with Converter Studio
+description: 'Converts a file with Converter Studio (https://converter.studio):
+  iPhone photos (HEIC), camera RAW, video, audio, PDF and Office documents,
+  spreadsheets, e-books and more. Takes a file from the workspace storage (S3)
+  and saves the result there, or an uploaded file and returns the result to
+  download; result_as "link" returns a download link valid for 6 hours instead.
+  The file is sent to converter.studio and the conversion uses your account''s
+  credits. Needs a converter_studio resource with an API key from
+  https://converter.studio/account#api-keys.'
+lock: ''
+kind: script
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  order:
+    - converter_studio
+    - to
+    - file
+    - file_base64
+    - file_name
+    - options
+    - max_credits
+    - result_as
+    - output_key
+    - idempotency_key
+  properties:
+    converter_studio:
+      type: object
+      description: Your Converter Studio API key
+        (https://converter.studio/account#api-keys).
+      default: null
+      format: resource-converter_studio
+      properties:
+        apiKey:
+          type: string
+          description: ''
+          originalType: string
+        baseUrl:
+          type: string
+          description: ''
+          originalType: string
+    file:
+      type: object
+      description: A file in the workspace storage (S3). The result is saved there too.
+      default: null
+      format: resource-s3_object
+    file_base64:
+      type: string
+      description: Or upload a file here, and give its file_name.
+      contentEncoding: base64
+      default: null
+      originalType: bytes
+    file_name:
+      type: string
+      description: The file's name with its extension, such as photo.heic (for a file
+        from S3, its key's last part by default).
+      default: null
+      originalType: string
+    idempotency_key:
+      type: string
+      description: The same key within 24 hours returns the first conversion instead
+        of starting a second one (for retried flow steps).
+      default: null
+      originalType: string
+    max_credits:
+      type: number
+      description: It starts on its own up to this price in credits; above it, it
+        waits for "Confirm a quoted conversion".
+      default: 20
+    options:
+      type: object
+      description: 'Conversion settings, such as {"quality": "high"} or {"ocr": true}.
+        The list: https://converter.studio/developers'
+      default: null
+      properties: {}
+    output_key:
+      type: string
+      description: 'Where to save the result in the workspace storage. Default:
+        converter_studio/<conversion id>/<result name>.'
+      default: null
+      originalType: string
+    result_as:
+      type: string
+      description: 's3: saved in the workspace storage; base64: a file to download;
+        link: the conversion with a download link valid for 6 hours. Default: s3
+        for a file from S3, base64 for an upload.'
+      default: null
+      enum:
+        - s3
+        - base64
+        - link
+      originalType: enum
+    to:
+      type: string
+      description: 'The format to convert to: jpg, png, webp, avif, pdf, docx, mp4,
+        mp3... (List formats shows them all).'
+      default: null
+      originalType: string
+  required:
+    - converter_studio
+    - to

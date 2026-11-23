@@ -1,0 +1,22 @@
+description: |-
+  API key for Converter Studio (https://converter.studio), the file conversion API: iPhone photos (HEIC), camera RAW, video, audio, PDF and Office documents, spreadsheets, e-books and more.
+
+  Create a key on your account page at https://converter.studio/account#api-keys (it is shown once and starts with cvs_live_). Conversions use the account's credits.
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  order:
+    - apiKey
+    - baseUrl
+  properties:
+    apiKey:
+      type: string
+      description: Your Converter Studio API key (cvs_live_...), from https://converter.studio/account#api-keys
+      default: ''
+      password: true
+    baseUrl:
+      type: string
+      description: The Converter Studio API's address. Keep https://converter.studio/api unless you were given another one.
+      default: https://converter.studio/api
+  required:
+    - apiKey

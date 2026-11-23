@@ -1,0 +1,87 @@
+summary: Convert a file from a URL with Converter Studio
+description: Converts the file behind a link (a direct link, or a Google Drive,
+  Dropbox or OneDrive share link) with Converter Studio
+  (https://converter.studio), which fetches the file itself, and waits until it
+  is done. Returns the conversion with a download link valid for 6 hours, saves
+  the result in the workspace storage (S3) or returns it as a file to download.
+  Uses your account's credits. Needs a converter_studio resource with an API key
+  from https://converter.studio/account#api-keys.
+lock: ''
+kind: script
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  order:
+    - converter_studio
+    - url
+    - to
+    - options
+    - max_credits
+    - result_as
+    - output_key
+    - idempotency_key
+  properties:
+    converter_studio:
+      type: object
+      description: Your Converter Studio API key
+        (https://converter.studio/account#api-keys).
+      default: null
+      format: resource-converter_studio
+      properties:
+        apiKey:
+          type: string
+          description: ''
+          originalType: string
+        baseUrl:
+          type: string
+          description: ''
+          originalType: string
+    idempotency_key:
+      type: string
+      description: The same key within 24 hours returns the first conversion instead
+        of starting a second one (for retried flow steps).
+      default: null
+      originalType: string
+    max_credits:
+      type: number
+      description: It starts on its own up to this price in credits; above it, it
+        waits for "Confirm a quoted conversion".
+      default: 20
+    options:
+      type: object
+      description: 'Conversion settings, such as {"quality": "high"} or {"ocr": true}.
+        The list: https://converter.studio/developers'
+      default: null
+      properties: {}
+    output_key:
+      type: string
+      description: 'Where to save the result in the workspace storage. Default:
+        converter_studio/<conversion id>/<result name>.'
+      default: null
+      originalType: string
+    result_as:
+      type: string
+      description: 'link: the conversion with a download link valid for 6 hours; s3:
+        saved in the workspace storage; base64: a file to download.'
+      default: link
+      enum:
+        - link
+        - s3
+        - base64
+      originalType: enum
+    to:
+      type: string
+      description: 'The format to convert to: jpg, png, webp, avif, pdf, docx, mp4,
+        mp3... (List formats shows them all).'
+      default: null
+      originalType: string
+    url:
+      type: string
+      description: A direct link to the file, or a Google Drive, Dropbox or OneDrive
+        share link.
+      default: null
+      originalType: string
+  required:
+    - converter_studio
+    - url
+    - to

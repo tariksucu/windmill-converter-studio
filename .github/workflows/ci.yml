@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  pull_request:
+    paths-ignore:
+      - '**.md'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+
+# Cancel in-progress runs for the same branch/PR.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Lint, types and tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      # Dependencies' install scripts are not needed to lint or test.
+      - name: Install dependencies
+        run: 'npm ci --ignore-scripts'
+
+      - name: Prettier and TypeScript
+        run: 'npm run lint'
+
+      # Windmill runs TypeScript scripts with Bun.
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.5'
+
+      # The scripts against a local stand-in for the API and Windmill's storage: no network, no key.
+      - name: Run tests
+        run: 'bun test test/'

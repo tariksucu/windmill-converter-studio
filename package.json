@@ -1,0 +1,41 @@
+{
+  "name": "windmill-converter-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Converter Studio scripts and resource type for Windmill: convert HEIC and RAW photos, videos, audio, documents and e-books from Windmill scripts and flows.",
+  "keywords": [
+    "windmill",
+    "windmill-hub",
+    "converter-studio",
+    "file-conversion",
+    "file-converter",
+    "heic-to-jpg",
+    "pdf"
+  ],
+  "homepage": "https://converter.studio/developers",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tariksucu/windmill-converter-studio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tariksucu/windmill-converter-studio/issues",
+    "email": "support@converter.studio"
+  },
+  "license": "MIT",
+  "author": "Converter Studio <support@converter.studio> (https://converter.studio)",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "format": "prettier --write .",
+    "lint": "prettier --check . && tsc -p tsconfig.json",
+    "test": "bun test test/"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.5",
+    "converter-studio": "1.0.0",
+    "prettier": "3.10.1",
+    "typescript": "6.0.3",
+    "windmill-client": "1.882.0",
+    "windmill-parser-wasm-ts": "1.880.1"
+  }
+}
