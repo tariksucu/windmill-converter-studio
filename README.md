@@ -23,7 +23,7 @@ import), which uploads large files in parts, waits with long polling and retries
 
 1. Create an API key on your Converter Studio account page:
    [converter.studio/account#api-keys](https://converter.studio/account#api-keys). Keys start with
-   `cvs_live_` and are shown once. Free accounts get 13 credits a day; most files cost 1 credit,
+   `cvs_live_` and are shown once. Free accounts get 25 credits a day; most files cost 1 credit,
    audio and video are priced by their length. See [pricing](https://converter.studio/pricing).
 2. In Windmill, open **Resources**, add a resource of type `converter_studio` and paste the key in
    `apiKey` (Windmill keeps it as a secret). Leave `baseUrl` at `https://converter.studio/api`.
